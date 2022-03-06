@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author nelso
@@ -20,7 +19,7 @@ import javax.swing.JOptionPane;
 public class DContacto {
     conexionDB con = new conexionDB ();
         Connection conexion = con.getConecction();
-    public ArrayList<Contactos>ListadoEstudiantes()       
+    public ArrayList<Contactos>ListadoContatos()       
     { ArrayList<Contactos> listado = null;
       
         try {
@@ -29,10 +28,9 @@ public class DContacto {
              
              CallableStatement cb = conexion.prepareCall("select * from contactos");
                 ResultSet resultado = cb.executeQuery();
-                
+      
              while (resultado.next())
-             {
-             
+             {  
              Contactos ct = new Contactos();
              ct.setID(resultado.getInt("ID"));
              ct.setNombre(resultado.getString("Nombre"));
@@ -57,10 +55,17 @@ public class DContacto {
                 JOptionPane.showMessageDialog(null,"Contacto agregado","Mensaje sistems",1);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null,"Error" + ex.toString(),"Mensaje sistems", 1);
-              
             }
     }
-    public void upContacto(){
-        
+    
+    public void UpContacto(Contactos ct){
+        try {
+                CallableStatement cb = conexion.prepareCall("UPDATE contactos SET Nombre='"+ct.getNombre()+"', Edad='"+ct.getEdad()+"',Email='"+ct.getEmail()+"',NumeroDeTelefono='"+ct.getNumeroDeTelefono()+"'  WHERE ID='"+ct.getID()+"'");
+                cb.execute();
+               
+                JOptionPane.showMessageDialog(null,"Contacto actualizado","Mensaje sistems",1);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"Error" + ex.toString(),"Mensaje sistems", 1);
+            }
     } 
 }
