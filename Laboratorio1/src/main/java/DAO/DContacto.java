@@ -68,4 +68,17 @@ public class DContacto {
                 JOptionPane.showMessageDialog(null,"Error" + ex.toString(),"Mensaje sistems", 1);
             }
     } 
+    
+    public void Delet(Contactos ct)
+    {
+          try {
+                CallableStatement cb = conexion.prepareCall("DELETE from contactos Where ID ='"+ct.getID()+"' ");
+                cb.execute();
+               
+                JOptionPane.showMessageDialog(null,"Contacto Eliminado","Mensaje sistems",1);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"Error" + ex.toString(),"Mensaje sistems", 1);
+            }
+    }
+    
 }
